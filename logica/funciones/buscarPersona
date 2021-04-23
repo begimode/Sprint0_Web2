@@ -1,6 +1,7 @@
 // -*- javascript -*-
 
 // --------------------------------------------------------------------------------
+// prueba
 // --------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------
@@ -14,7 +15,7 @@ f: async function ( args ) {
 
 	return new Promise( function( resolver, rechazar) {
 		setTimeout( function() { // simulo que llamo función asíncrona
-			resolver( "resultado de buscar persona en conexion= " + self.conexion)
+			resolver( "resultado de la prueba: Funciona" )
 			// rechazar( "pongamos que esto falla" )
 		}, 1000 )
 	})

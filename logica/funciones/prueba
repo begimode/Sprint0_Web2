@@ -1,37 +1,31 @@
 // -*- javascript -*-
 
 // --------------------------------------------------------------------------------
-// buscarPersonaConDNI
+// prueba: hace ECHO de lo que recibe
 // --------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
 module.exports = {
 
+	// ----------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------
 	conexion: null, 
 
 	// ----------------------------------------------------------------------------
-	// datos: { dni:Texto 
-	//         -->
-	//            buscarPersonaConDNI() <--
-	//         <--
-	// {dni:Texto, nombre:Texto: apellidos:Texto}
+	// prueba()
 	// ----------------------------------------------------------------------------
-	f: async function ( datos ) {
-
-		var textoSQL = "select * from Persona where dni=$dni";
-		var valoresParaSQL = { $dni: datos.dni }
-
-		return new Promise( (resolver, rechazar) => {
-			this.conexion.all( textoSQL, valoresParaSQL,
-							   ( err, res ) => {
-								   ( err ? rechazar(err) : resolver(res) )
-							   })
+	f: async function ( args ) {
+		var self = this
+		
+		return new Promise( function( resolver, rechazar) {
+			setTimeout( function() { // simulo que llamo función asíncrona
+				resolver( args )
+			}, 200 )
 		})
 		
 	} // ()
-
-} // module.exports
+} // exports
 
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------

@@ -39,7 +39,7 @@ describe( "Test 1: insertar una persona", function() {
 		await laLogica.funciones.insertarPersona.f(
 			{dni: "1234A", nombre: "Pepe", apellidos: "García Pérez" } )
 			
-		var res = await laLogica.funciones.buscarPersonaConDNI.f( "1234A" )
+		var res = await laLogica.funciones.buscarPersonaConDNI.f( {dni: "1234A"} )
 			
 		assert.equal( res.length, 1, "¿no hay un resulado?" )
 		assert.equal( res[0].dni, "1234A", "¿no es 1234A?" )
