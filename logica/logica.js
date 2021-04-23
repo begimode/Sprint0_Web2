@@ -26,10 +26,10 @@ module.exports = function ( nombreBD ) {
 
 		var conexion = new sqlite3.Database( nombreBD , function( err ) {
 			if ( err ) {
-				rechazar( err )
+				rechazar( "Error en conexión a base de datos: " + err )
 			}
 
-			console.log(" logica(): conexión abierta con: " + nombreBD )
+			// console.log(" logica(): conexión abierta con: " + nombreBD )
 
 			// conexión establecida con la BD
 			// activo foreing_keys para sqlite3
@@ -37,7 +37,7 @@ module.exports = function ( nombreBD ) {
 
 			var logica = cargador( __dirname + "/funciones", conexion )
 
-			console.log(" logica(): funciones cargadas " )
+			// console.log(" logica(): funciones cargadas " )
 			
 			resolver( logica )
 
