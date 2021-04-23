@@ -1,22 +1,18 @@
 
 // --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+const cargador = require( './cargador.js' )
+
+// --------------------------------------------------------------------------------
 // main()
 // --------------------------------------------------------------------------------
 async function main() {
 
-	var obj = require( __dirname + "/funciones/" + "buscarPersona.js" )
-	
-	obj.conexion = "la conexion"
-	
-	console.log( " ----------------------- " )
-	console.log( obj )
-	
-	console.log( obj.conexion )
-	console.log( " ----------------------- " )
-	
-	var r = await obj.f( "datos entrada" )
-	
+	var logica = cargador( __dirname + "/funciones", "conexion" )
+
+	var r =  await	logica.f( "buscarPersona", "datos entrada" ) 
 	console.log( r )
+
 }
 
 // --------------------------------------------------------------------------------
