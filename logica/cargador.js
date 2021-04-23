@@ -21,7 +21,7 @@ const fs = require( 'fs' )
 //                 -->
 //                    cargador()
 //                 <--
-// { 
+// Logica = { 
 //   f: ( Texto, TArg -> () -> TRes ),
 //   funciones: [ { conexion: TDep, f: TArg -> () -> TRes } ]_Texto // array asociativo
 // }
@@ -49,10 +49,14 @@ module.exports = function( nombreDir, dependencia ) {
 	// les inyecto la dependencia
 	// y los guardo
 	fs.readdirSync( nombreDir ).forEach( function( fich ) {
-		console.log( "cargando: " + fich )
-		var obj = require( nombreDir + "/" + fich )
-		obj.conexion = dependencia
-		logica.funciones[ fich ] = obj
+		// console.log( "cargando: " + fich )
+		try {
+			var obj = require( nombreDir + "/" + fich )
+			obj.conexion = dependencia
+			logica.funciones[ fich ] = obj
+		} catch( err ) {
+			// ignoro errores al cargar
+		}
 	})
 
 	// devuelvo el resultado
