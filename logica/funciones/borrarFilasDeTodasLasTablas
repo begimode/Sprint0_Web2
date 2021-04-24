@@ -10,6 +10,9 @@ module.exports = {
 
 	conexion: null, 
 
+	// tengo "inyectada" también this.logica para poder llamar a funciones "hermanas"
+	//         this.logica.funciones.loQueSea.f()
+
 	// ----------------------------------------------------------------------------
 	//          borrarFilasDeTodasLasTablas() -->
 	// ----------------------------------------------------------------------------

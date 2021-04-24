@@ -55,9 +55,16 @@ module.exports = function( nombreDir, dependencia ) {
 		// console.log( "cargando: " + fich )
 		try {
 			var obj = require( nombreDir + "/" + fich )
+			// inyecto la dependencia (la conexión con la BD)
 			obj.conexion = dependencia
-			// AQUI
-			obj.diHola = function () { console.log( "hola") }
+
+			// inyecto una referencia a la propia logica, por
+			// si una función de lógica quiere usar una otra
+			// función de lógica "hermana"
+			obj.logica = logica
+
+			// guardo obj (== función de lógica) en el objeto
+			// donde logica (que acumula estas funciones-objeto)
 			logica.funciones[ fich ] = obj
 		} catch( err ) {
 			// ignoro errores al cargar

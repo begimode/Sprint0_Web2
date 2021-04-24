@@ -17,6 +17,9 @@ f: async function ( args ) {
 		setTimeout( function() { // simulo que llamo función asíncrona
 			resolver( "resultado de la prueba: Funciona. conexion=" + self.conexion)
 			// rechazar( "pongamos que esto falla" )
+
+			// tengo inyectado logica por si quiero llamar a funciones "hermanas"
+			self.logica.funciones.borrarFilasDeTodasLasTablas.f()
 		}, 1000 )
 	})
 

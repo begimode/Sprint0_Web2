@@ -19,8 +19,6 @@ async function main() {
 	r =  await	laLogica.f( "prueba", "datos entrada" ) 
 	console.log( r )
 
-	await laLogica.funciones.prueba.diHola()
-
 } // main()
 
 // --------------------------------------------------------------------------------
