@@ -27,7 +27,7 @@ describe( "Test 1: insertar una persona", function() {
 	//
 	it( "borro todas las filas", async function() {
 
-		await laLogica.funciones.borrarFilasDeTodasLasTablas.f() 
+		await laLogica.borrarFilasDeTodasLasTablas.f() 
 		
 	}) // it
 
@@ -36,10 +36,10 @@ describe( "Test 1: insertar una persona", function() {
 	//
 	it( "inserto una persona", async function() {
 
-		await laLogica.funciones.insertarPersona.f(
+		await laLogica.insertarPersona.f(
 			{dni: "1234A", nombre: "Pepe", apellidos: "García Pérez" } )
 			
-		var res = await laLogica.funciones.buscarPersonaConDNI.f( {dni: "1234A"} )
+		var res = await laLogica.buscarPersonaConDNI.f( {dni: "1234A"} )
 			
 		assert.equal( res.length, 1, "¿no hay un resulado?" )
 		assert.equal( res[0].dni, "1234A", "¿no es 1234A?" )
@@ -52,7 +52,7 @@ describe( "Test 1: insertar una persona", function() {
 	//
 	it( "cierro conexion con base de datos", async function() {
 
-			await laLogica.funciones.cerrarConexion.f()
+			await laLogica.cerrarConexion.f()
 
 	}) // it
 

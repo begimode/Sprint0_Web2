@@ -11,7 +11,7 @@ async function main() {
 	var laLogica = await logica( "../bd/datos.bd" )
 
 	// OK: llamada "directa"
-	var r = await laLogica.funciones.prueba.f( "datos entrada" )
+	var r = await laLogica.prueba.f( "datos entrada" )
 	// OK console.log( laLogica.funciones.buscarPersona.f )
 	console.log( r )
 

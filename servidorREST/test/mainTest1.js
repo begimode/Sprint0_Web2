@@ -43,7 +43,6 @@ describe( "Test 1: pon aquí tu comentario (recuerda arrancar el servidor)", fun
 			function( err, respuesta, carga ) {
 				assert.equal( err, null, "¿ha habido un error?" )
 				assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
-				assert.equal( JSON.parse( carga ), "hola", "¿La carga no es OK" )
 				hecho()
 			} // callback
 		) // .post

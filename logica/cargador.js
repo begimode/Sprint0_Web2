@@ -23,7 +23,7 @@ const fs = require( 'fs' )
 //                 <--
 // Logica = { 
 //   f: ( Texto, TArg -> () -> TRes ),
-//   funciones: [ { conexion: TDep, f: TArg -> () -> TRes } ]_Texto // array asociativo
+//   [ { conexion: TDep, f: TArg -> () -> TRes } ]_Texto // array asociativo
 // }
 //
 // --------------------------------------------------------------------------------
@@ -32,10 +32,9 @@ module.exports = function( nombreDir, dependencia ) {
 	// objeto directamente creado aquí (sin escribit la clase en otro lado ! )
 	//
 	var logica = {
-		funciones: {}, 
 		f: async function( nombreFuncion, args ) {
 			// busco la funcion por su nombre
-			var laFuncion = this.funciones[ nombreFuncion ]
+			var laFuncion = this[ nombreFuncion ]
 
 			// compruebo que existe
 			if ( laFuncion == null ) {
@@ -65,7 +64,7 @@ module.exports = function( nombreDir, dependencia ) {
 
 			// guardo obj (== función de lógica) en el objeto
 			// donde logica (que acumula estas funciones-objeto)
-			logica.funciones[ fich ] = obj
+			logica[ fich ] = obj
 		} catch( err ) {
 			// ignoro errores al cargar
 		}

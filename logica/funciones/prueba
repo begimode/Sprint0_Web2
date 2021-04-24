@@ -8,7 +8,9 @@
 // --------------------------------------------------------------------------------
 module.exports = {
 
-// conexion: null, 
+// conexion: null,  se inyecta al cargar. No hace falta ni declararlo aqubí
+
+// tengo inyectado logica por si quiero llamar a funciones "hermanas"
 
 f: async function ( args ) {
 	var self = this
@@ -19,7 +21,7 @@ f: async function ( args ) {
 			// rechazar( "pongamos que esto falla" )
 
 			// tengo inyectado logica por si quiero llamar a funciones "hermanas"
-			self.logica.funciones.borrarFilasDeTodasLasTablas.f()
+			// p.ej: self.logica.borrarFilasDeTodasLasTablas.f()
 		}, 1000 )
 	})
 
