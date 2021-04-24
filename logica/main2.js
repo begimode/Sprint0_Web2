@@ -11,13 +11,15 @@ async function main() {
 	var laLogica = await logica( "../bd/datos.bd" )
 
 	// OK: llamada "directa"
-	var r = await laLogica.funciones.buscarPersona.f( "datos entrada" )
+	var r = await laLogica.funciones.prueba.f( "datos entrada" )
 	// OK console.log( laLogica.funciones.buscarPersona.f )
 	console.log( r )
 
 	// OK: llamada "por nombre de texto"
-	r =  await	laLogica.f( "buscarPersona", "datos entrada" ) 
+	r =  await	laLogica.f( "prueba", "datos entrada" ) 
 	console.log( r )
+
+	await laLogica.funciones.prueba.diHola()
 
 } // main()
 

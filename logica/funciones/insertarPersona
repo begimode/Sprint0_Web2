@@ -8,7 +8,7 @@
 // --------------------------------------------------------------------------------
 module.exports = {
 
-	conexion: null, 
+	conexion: null,  // conexión con la bd. Se "inyecta" al cargarse.
 
 	// ----------------------------------------------------------------------------
 	// datos:{dni:Texto, nombre:Texto: apellidos:Texto}

@@ -1,31 +1,27 @@
 // -*- javascript -*-
 
 // --------------------------------------------------------------------------------
-// prueba: hace ECHO de lo que recibe
+// prueba
 // --------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
 module.exports = {
 
-	// ----------------------------------------------------------------------------
-	// ----------------------------------------------------------------------------
-	conexion: null, 
+// conexion: null, 
 
-	// ----------------------------------------------------------------------------
-	// prueba()
-	// ----------------------------------------------------------------------------
-	f: async function ( args ) {
-		var self = this
-		
-		return new Promise( function( resolver, rechazar) {
-			setTimeout( function() { // simulo que llamo función asíncrona
-				resolver( args )
-			}, 200 )
-		})
-		
-	} // ()
-} // exports
+f: async function ( args ) {
+	var self = this
+
+	return new Promise( function( resolver, rechazar) {
+		setTimeout( function() { // simulo que llamo función asíncrona
+			resolver( "resultado de la prueba: Funciona. conexion=" + self.conexion)
+			// rechazar( "pongamos que esto falla" )
+		}, 1000 )
+	})
+
+   } // ()
+}
 
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------

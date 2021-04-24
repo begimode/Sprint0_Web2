@@ -10,7 +10,7 @@ async function main() {
 
 	var logica = cargador( __dirname + "/funciones", "conexion" )
 
-	var r =  await	logica.f( "buscarPersona", "datos entrada" ) 
+	var r =  await	logica.f( "prueba", "datos entrada" ) 
 	console.log( r )
 
 }

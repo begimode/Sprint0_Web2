@@ -28,6 +28,9 @@ const fs = require( 'fs' )
 //
 // --------------------------------------------------------------------------------
 module.exports = function( nombreDir, dependencia ) {
+	//
+	// objeto directamente creado aquí (sin escribit la clase en otro lado ! )
+	//
 	var logica = {
 		funciones: {}, 
 		f: async function( nombreFuncion, args ) {
@@ -53,6 +56,8 @@ module.exports = function( nombreDir, dependencia ) {
 		try {
 			var obj = require( nombreDir + "/" + fich )
 			obj.conexion = dependencia
+			// AQUI
+			obj.diHola = function () { console.log( "hola") }
 			logica.funciones[ fich ] = obj
 		} catch( err ) {
 			// ignoro errores al cargar
