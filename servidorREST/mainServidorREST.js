@@ -5,6 +5,8 @@
 const express = require( 'express' ) 
 const bodyParser = require( 'body-parser' )
 
+const fs = require( 'fs' )
+
 const logica = require( "../logica/logica.js" )
 
 // --------------------------------------------------------------------------------
@@ -21,6 +23,10 @@ const logica = require( "../logica/logica.js" )
 // 
 // --------------------------------------------------------------------------------
 function cargarReglasUniversales( servidorExpress, laLogica ) {
+
+    // .......................................................
+	// Reglas del API REST
+    // .......................................................
 
     // .......................................................
     // GET /prueba
@@ -67,7 +73,79 @@ function cargarReglasUniversales( servidorExpress, laLogica ) {
 				respuesta.status(404).send( "Se produjo este error: " + error )
 			}
 
-		}) // get /persona
+		}) // 
+
+    // .......................................................
+	// Las siguientes reglas son para servir html y js "ordinario"
+    // .......................................................
+
+    // .......................................................
+    // GET /ux/fichero.html
+    // .......................................................
+    servidorExpress.get('/ux/:ficheroHTML', function( peticion, respuesta ){
+
+		try {
+			var nombreFichero = peticion.params.ficheroHTML
+
+			console.log( " * GET /ux/:ficheroHTML = " + nombreFichero )
+
+			fs.readFile( "../ux/" + nombreFichero, "utf8", function( error, contenido ) {
+				if ( error ) {
+					respuesta.status(404).send( "Se produjo este error: " + error )
+				}
+
+				console.log( "          .... servido" )
+				respuesta.send( contenido )
+			})
+		} catch( error ) {
+				respuesta.status(404).send( "Se produjo este error: " + error )
+		}
+			
+	}) // servidorExpress.get(
+
+    // .......................................................
+    // GET /ux/logicaFake/:fichero.js
+    // .......................................................
+    servidorExpress.get('/ux/logicaFake/:ficheroJS', function( peticion, respuesta ){
+
+		try {
+			var nombreFichero = peticion.params.ficheroJS
+
+			console.log( " * GET /ux/logicaFake/:ficheroJS = " + nombreFichero )
+
+			fs.readFile( "../ux/logicaFake/" + nombreFichero, "utf8", function( error, contenido ) {
+				if ( error ) {
+					respuesta.status(404).send( "Se produjo este error: " + error )
+				}
+
+				console.log( "          .... servido" )
+				respuesta.send( contenido )
+			})
+		} catch( error ) {
+				respuesta.status(404).send( "Se produjo este error: " + error )
+		}
+			
+	}) // servidorExpress.get(
+
+    // .......................................................
+    // GET /:cualquierCosa
+    // .......................................................
+    servidorExpress.get('/:cualquierCosa', function( peticion, respuesta ){
+
+		try {
+			var nombreCosa = peticion.params.cualquierCosa
+
+			console.log( " * GET cualquier cosa: = " + nombreCosa )
+
+
+			respuesta.send( "No puedes pedir cualquier cosa = " + nombreCosa )
+
+		} catch( error ) {
+				respuesta.status(404).send( "Se produjo este error: " + error )
+		}
+			
+	}) // servidorExpress.get(
+
 } // ()
 
 // --------------------------------------------------------------------------------

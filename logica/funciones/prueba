@@ -17,7 +17,11 @@ f: async function ( args ) {
 
 	return new Promise( function( resolver, rechazar) {
 		setTimeout( function() { // simulo que llamo función asíncrona
-			resolver( "resultado de la prueba: Funciona. conexion=" + self.conexion)
+
+			var respuesta = { error: null, mensaje: ' logica/funciones/prueba: OK' } 
+			resolver( respuesta )
+
+			// resolver( JSON.stringify( { error: null, mensaje: ' logica/funciones/prueba: OK' } ) )
 			// rechazar( "pongamos que esto falla" )
 
 			// tengo inyectado logica por si quiero llamar a funciones "hermanas"
