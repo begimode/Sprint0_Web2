@@ -1,8 +1,8 @@
 // ---------------------------------------------------
 // fake
 // ---------------------------------------------------
-function prueba( cb ) {
+function insertarPersona( datos, cb ) {
 
-	llamar( "/f/prueba", null, cb )
+	llamar( "/f/insertarPersona", datos, cb )
 
 } // ()

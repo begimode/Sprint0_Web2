@@ -1,8 +1,8 @@
 // ---------------------------------------------------
 // fake
 // ---------------------------------------------------
-function prueba( cb ) {
+function buscarPersonaConDNI( datos, cb ) {
 
-	llamar( "/f/prueba", null, cb )
+	llamar( "/f/buscarPersonaConDNI", datos, cb )
 
 } // ()

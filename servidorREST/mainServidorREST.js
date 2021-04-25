@@ -59,18 +59,30 @@ function cargarReglasUniversales( servidorExpress, laLogica ) {
 					argumentos = JSON.parse( peticion.body )
 				} catch( error ) {
 					// ignoro errores, por si no hay body
+					console.log( "        error en JSON.parse " )
 				}
 
+				// console.log( "     body=" + peticion.body )
+				// console.log( "     body text=" + JSON.stringify( peticion.body ) )
+				// console.log( "     argumentos=" + argumentos )
+
+				//
 				// esta es la llamada
+				//
 				var res = await laLogica.f( nombreFuncion, argumentos )
 
-				// esta es el envío de la respuesta de la llamada
-				respuesta.send( JSON.stringify( res ) )
+				// esta es el envío de la respuesta de la llamada: si es JSON la paso a texto,
+				// Si no: la dejo como estaba:
+				var laRespuesta = res
+				try {
+					laRespuesta = JSON.stringify( laRespuesta )
+				} catch {
+				}
+				respuesta.send( laRespuesta )
 
 			} catch( error ) {
-				// el número 404 (NOT FOUND) usado para cualquier error, no
-				// es una idea perfecta
-				respuesta.status(404).send( "Se produjo este error: " + error )
+				// Envío 200 como valor status de HTTP, pero un JSON con la descripción del error
+				respuesta.send( JSON.stringify( {error: error} ) )
 			}
 
 		}) // 
