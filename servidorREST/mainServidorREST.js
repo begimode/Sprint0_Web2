@@ -87,9 +87,12 @@ function cargarReglasUniversales( servidorExpress, laLogica ) {
 
 		}) // 
 
+	/*
     // .......................................................
 	// Las siguientes reglas son para servir html y js "ordinario"
     // .......................................................
+	LO HE HECHO ABAJO DE ESTA FORMA:
+	servidorExpress.use( express.static( "../ux" ) )
 
     // .......................................................
     // GET /ux/fichero.html
@@ -157,6 +160,7 @@ function cargarReglasUniversales( servidorExpress, laLogica ) {
 		}
 			
 	}) // servidorExpress.get(
+*/
 
 } // ()
 
@@ -179,19 +183,28 @@ async function main() {
 	// para poder acceder a la carga de la petición http
 	// (asumiendo que es JSON) hay que hacer esto:
 	//  
+	// OK: original:
 	servidorExpress.use ( bodyParser.text({type: 'application/json'}) )
+
+	// Me ha dado problemas: servidorExpress.use( express.json() )
+
+	// no creo que necesite esto: servidorExpress.use(express.urlencoded({ extended: true }));
 
 	//  
 	// cargo las reglas REST
 	//  
 	cargarReglasUniversales( servidorExpress, laLogica )
 
+	//  
+	// configuradión automática para que sirva ficheros de ../ux
+	//  
+	servidorExpress.use( express.static( "../ux" ) )
 
 	//  
 	// arranco el servidor
 	//  
 	var servicio = servidorExpress.listen( 8080, function() {
-		console.log( "servidor REST escuchando en el puerto 8080 ")
+		console.log( "servidor REST escuchando en el puerto 8080: http://localhost:8080/Aplicacion.html ")
 	})
 
 	//  
