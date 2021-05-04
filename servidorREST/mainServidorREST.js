@@ -59,7 +59,7 @@ function cargarReglasUniversales( servidorExpress, laLogica ) {
 					argumentos = JSON.parse( peticion.body )
 				} catch( error ) {
 					// ignoro errores, por si no hay body
-					console.log( "        error en JSON.parse " )
+					// console.log( "        error en JSON.parse " )
 				}
 
 				// console.log( "     body=" + peticion.body )
@@ -69,7 +69,7 @@ function cargarReglasUniversales( servidorExpress, laLogica ) {
 				//
 				// esta es la llamada
 				//
-				var res = await laLogica.f( nombreFuncion, argumentos )
+				var res = await laLogica.llamar( nombreFuncion, argumentos )
 
 				// esta es el envío de la respuesta de la llamada: si es JSON la paso a texto,
 				// Si no: la dejo como estaba:

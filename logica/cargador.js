@@ -32,7 +32,7 @@ module.exports = function( nombreDir, dependencia ) {
 	// objeto directamente creado aquí (sin escribit la clase en otro lado ! )
 	//
 	var logica = {
-		f: async function( nombreFuncion, args ) {
+		llamar: async function( nombreFuncion, args ) {
 			// busco la funcion por su nombre
 			var laFuncion = this[ nombreFuncion ]
 
@@ -42,7 +42,7 @@ module.exports = function( nombreDir, dependencia ) {
 			}
 
 			// llamo la función
-			return laFuncion.f( args )
+			return laFuncion( args )
 		} // f()
 	} // logica
 
@@ -51,7 +51,7 @@ module.exports = function( nombreDir, dependencia ) {
 	// les inyecto la dependencia
 	// y los guardo
 	fs.readdirSync( nombreDir ).forEach( function( fich ) {
-		// console.log( "cargando: " + fich )
+		// console.log( " ***** cargando: " + fich )
 		try {
 			var obj = require( nombreDir + "/" + fich )
 			// inyecto la dependencia (la conexión con la BD)
@@ -67,6 +67,7 @@ module.exports = function( nombreDir, dependencia ) {
 			logica[ fich ] = obj
 		} catch( err ) {
 			// ignoro errores al cargar
+			// console.log( "         error cargando: " + fich + " " + err )
 		}
 	})
 

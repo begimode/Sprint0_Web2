@@ -4,21 +4,15 @@
 // insertarPersona
 // --------------------------------------------------------------------------------
 
-// --------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------
-module.exports = {
+// datos:{dni:Texto, nombre:Texto: apellidos:Texto}
+//     --> 
+//         insertarPersona() -->
+// ----------------------------------------------------------------------------
+module.exports =  async function insertarPersona( datos ) {
 
-	conexion: null,  // conexión con la bd. Se "inyecta" al cargarse.
-
-	// tengo "inyectada" también this.logica para poder llamar a funciones "hermanas"
+	// tengo "inyectada" también xxx.logica para poder llamar a funciones "hermanas"
 	//         this.logica.funciones.loQueSea.f()
 
-	// ----------------------------------------------------------------------------
-	// datos:{dni:Texto, nombre:Texto: apellidos:Texto}
-	//     --> 
-	//         insertarPersona() -->
-	// ----------------------------------------------------------------------------
-	f: async function ( datos ) {
 
 		var textoSQL =
 			'insert into Persona values( $dni, $nombre, $apellidos );'
@@ -26,14 +20,13 @@ module.exports = {
 							   $apellidos: datos.apellidos }
 		
 		return new Promise( (resolver, rechazar) => {
-			this.conexion.run( textoSQL, valoresParaSQL, function( err ) {
+			insertarPersona.conexion.run( textoSQL, valoresParaSQL, function( err ) {
 				( err ? rechazar(err) : resolver() )
 			})
 		})
 		
-	} // ()
+} // ()
 
-} // module.exports
 
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------

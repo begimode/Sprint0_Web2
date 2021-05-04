@@ -6,32 +6,28 @@
 
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
-module.exports = {
 
-	conexion: null,  // conexión con la bd. Se "inyecta" al cargarse.
 
-	// ----------------------------------------------------------------------------
-	// datos: { dni:Texto 
-	//         -->
-	//            buscarPersonaConDNI() <--
-	//         <--
-	// {dni:Texto, nombre:Texto: apellidos:Texto}
-	// ----------------------------------------------------------------------------
-	f: async function ( datos ) {
+// ----------------------------------------------------------------------------
+// datos: { dni:Texto 
+//         -->
+//            buscarPersonaConDNI() <--
+//         <--
+// {dni:Texto, nombre:Texto: apellidos:Texto}
+// ----------------------------------------------------------------------------
+module.exports = async function buscarPersonaConDNI( datos ) {
 
 		var textoSQL = "select * from Persona where dni=$dni";
 		var valoresParaSQL = { $dni: datos.dni }
 
 		return new Promise( (resolver, rechazar) => {
-			this.conexion.all( textoSQL, valoresParaSQL,
+			buscarPersonaConDNI.conexion.all( textoSQL, valoresParaSQL,
 							   ( err, res ) => {
 								   ( err ? rechazar(err) : resolver(res) )
 							   })
 		})
 		
-	} // ()
-
-} // module.exports
+} // ()
 
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
