@@ -1,19 +1,27 @@
 {
-	"//": "npm run test",
-	"name": "servidorREST",
-	"description": "2021",
-	"license": "LGPL-3.0",
-	"version": "0.0.1",
-	"repository": "no hay",
-	"scripts": {
-		"servidor": "node mainServidorREST.js",
-		"test": "./node_modules/mocha/bin/mocha"
-	},
-	"dependencies": {
-		"express": "*",
-		"request": "*"
-	},
-	"devDependencies": {
-		"mocha": "*"
-	}
+  "//": "npm run test",
+  "name": "servidor_rest",
+  "description": "2019",
+  "license": "LGPL-3.0",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "no hay"
+  },
+  "scripts": {
+    "servidor": "node mainServidorREST.js",
+    "test": "node ./node_modules/mocha/bin/mocha"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mocha": "8.3.0",
+    "request": "*",
+    "sqlite3": "*"
+  },
+  "main": "mainServidorREST.js",
+  "directories": {
+    "test": "test"
+  },
+  "author": ""
 }

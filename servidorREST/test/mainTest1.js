@@ -1,6 +1,7 @@
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
 
+
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
 const request = require ('request')
@@ -18,7 +19,7 @@ describe( "Test 1: pon aquí tu comentario (recuerda arrancar el servidor)", fun
 	// ........................................................................... 
 	it( "probar que GET /prueba responde ¡Funciona!", function( hecho ) {
 		request.get(
-			{ url : IP_PUERTO+"/prueba", headers : { 'User-Agent' : 'jordi' }},
+			{ url : IP_PUERTO+"/prueba", headers : { 'User-Agent' : 'Chenyi' }},
 			function( err, respuesta, carga ) {
 				assert.equal( err, null, "¿ha habido un error?" )
 				assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
@@ -31,33 +32,33 @@ describe( "Test 1: pon aquí tu comentario (recuerda arrancar el servidor)", fun
 	// ........................................................................... 
 	// 2. 
 	// ........................................................................... 
-	it( "probar POST /f/prueba", function( hecho ) {
+	it( "probar POST insertarPersona", function( hecho ) {
+        var datosPersona = { dni : "62378236X", nombre : "Longa", apellidos : "García Perez"}
 
-		// esta función prueba está en logica/funciones/prueba
 
-		request.post(
-			{ url : IP_PUERTO+"/f/prueba",
-			  headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json' },
-			  body : JSON.stringify( "hola" )
-			},
-			function( err, respuesta, carga ) {
-				assert.equal( err, null, "¿ha habido un error?" )
-				assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
-				hecho()
-			} // callback
-		) // .post
-	}) // it
+        request.post(
+            { url : IP_PUERTO+"/insertarPersona",
+              headers : { 'User-Agent' : 'Chenyi', 'Content-Type' : 'application/json' },
+              body : JSON.stringify( datosPersona )
+            },
+            function( err, respuesta, carga ) {
 
+                assert.equal( err, null, "¿ha habido un error?" )
+                assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
+                hecho()
+            } // callback
+        ) // .post
+    }) // it
 	// ........................................................................... 
 	// 3. 
 	// ........................................................................... 
-	it( "probar POST /f/borrarFilasDeTodasLasTablas", function( hecho ) {
+	it( "probar DELETE /borrarFilasDeTodasLasTablas", function( hecho ) {
 
 		// esta función prueba está en logica/funciones/prueba
 
-		request.post(
-			{ url : IP_PUERTO+"/f/borrarFilasDeTodasLasTablas",
-			  headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json' },
+		request.delete(
+			{ url : IP_PUERTO+"/borrarFilasDeTodasLasTablas",
+			  headers : { 'User-Agent' : 'Chenyi', 'Content-Type' : 'application/json' },
 			  body : null
 			},
 			function( err, respuesta, carga ) {
@@ -68,37 +69,23 @@ describe( "Test 1: pon aquí tu comentario (recuerda arrancar el servidor)", fun
 				assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
 				hecho()
 			} // callback
-		) // .post
+		) // .delete
 	}) // it
 
 	// ........................................................................... 
 	// 4. 
 	// ........................................................................... 
-	it( "probar POST /f/insertarPersona", function( hecho ) {
 
-		request.post(
-			{ url : IP_PUERTO+"/f/insertarPersona",
-			  headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json' },
-			  body : JSON.stringify( {dni: "1234A", nombre: "Pepe", apellidos: "García Pérez" } )
-			},
-			function( err, respuesta, carga ) {
-
-				assert.equal( err, null, "¿ha habido un error?: " + err )
-				assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
-				hecho()
-			} // callback
-		) // .post
-	}) // it
 
 	// ........................................................................... 
 	// 5. 
 	// ........................................................................... 
-	it( "probar POST /f/buscarPersonaConDNI", function( hecho ) {
+	it( "probar POST /buscarPersonaConCorreo", function( hecho ) {
 
 		request.post(
-			{ url : IP_PUERTO+"/f/buscarPersonaConDNI",
-			  headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json' },
-			  body : JSON.stringify( {dni: "1234A" } )
+			{ url : IP_PUERTO+"/buscarPersonaConCorreo",
+			  headers : { 'User-Agent' : 'Chenyi', 'Content-Type' : 'application/json' },
+			  body : JSON.stringify( {correo: "1234@gmail.com" } )
 			},
 			function( err, respuesta, carga ) {
 
@@ -110,13 +97,30 @@ describe( "Test 1: pon aquí tu comentario (recuerda arrancar el servidor)", fun
 				var resultados = JSON.parse( carga )
 
 				assert.equal( resultados.length, 1, "¿No hay un resultado" )
-				assert.equal( resultados[0].dni, "1234A", "¿No es el dni que he buscado?" )
+				assert.equal( resultados[0].correo, "1234@gmail.com", "¿No es el correo que he buscado?" )
 
 				hecho()
 			} // callback
 		) // .post
 	}) // it
-	
+
+	//
+
+	// it( "probar POST /f/insertarPersona", function( hecho ) {
+
+	// 	request.post(
+	// 		{ url : IP_PUERTO+"/f/insertarAsignatura",
+	// 		  headers : { 'User-Agent' : 'chenyi', 'Content-Type' : 'application/json' },
+	// 		  body : JSON.stringify( {codigo: "8907778", asignatura: "OA" } )
+	// 		},
+	// 		function( err, respuesta, carga ) {
+
+	// 			assert.equal( err, null, "¿ha habido un error?: " + err )
+	// 			assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
+	// 			hecho()
+	// 		} // callback
+	// 	) // .post
+	// }) // it
 }) // describe
 
 // --------------------------------------------------------------------------------
@@ -124,3 +128,4 @@ describe( "Test 1: pon aquí tu comentario (recuerda arrancar el servidor)", fun
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
+

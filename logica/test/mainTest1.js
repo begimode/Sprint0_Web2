@@ -1,67 +1,93 @@
-
-// --------------------------------------------------------------------------------
+/*
+// ........................................................
 // mainTest1.js
-// --------------------------------------------------------------------------------
-const logica = require( "../logica.js" )
-
-var assert = require ('assert')
-
-// --------------------------------------------------------------------------------
+// ........................................................
+const Logica = require("../Logica.js")
+var assert = require("assert")
+// ........................................................
 // main ()
-// --------------------------------------------------------------------------------
-describe( "Test 1: insertar una persona", function() {
+// ........................................................
 
+// es donde empieza la prueba del test 
+
+describe("Test 1: insertar una persona", function () {
+	// ....................................................
+	// ....................................................
 	var laLogica = null
-
-	// 
-	// 1.
-	//
-	it ( "cargo la lógica abriendo conexión ", async function() {
-
-		laLogica = await logica( "../bd/datos.bd" )
-
-		// console.log( laLogica )
-
-	})
-
-	// 
-	// 2.
-	//
-	it( "borro todas las filas", async function() {
-
-		await laLogica.borrarFilasDeTodasLasTablas() 
-		
+	// ....................................................
+	// ....................................................
+	it("conectar a la base de datos", function (hecho) {  // la prueba concreta, el cual tiene su tittulo y un callback con una funcion con cualquier nombre. 
+		laLogica = new Logica(  // crear un objeto --> 
+			"../bd/datos.bd",
+			function (err) {
+				if (err) {
+					throw new Error("No he podido conectar con datos.db")
+				}
+				hecho()
+			})
 	}) // it
+	// ....................................................
+	// ....................................................
+	it("borrar todas las filas", async function () {
+		await laLogica.borrarFilasDeTodasLasTablas()  
+	}) 
+	
+	// it
+	// ....................................................
+	// ....................................................
 
-	// 
-	// 3.
-	//
-	it( "inserto una persona", async function() {
+	it("puedo insertar una persona",
+		async function () {
+			try {
 
-		await laLogica.insertarPersona(
-			{dni: "1234A", nombre: "Pepe", apellidos: "García Pérez" } )
-			
-		var res = await laLogica.buscarPersonaConDNI( {dni: "1234A"} )
-			
-		assert.equal( res.length, 1, "¿no hay un resulado?" )
-		assert.equal( res[0].dni, "1234A", "¿no es 1234A?" )
-		assert.equal( res[0].nombre, "Pepe", "¿no es Pepe?" )
-		
-	}) // it
+			await laLogica.insertarPersona(
+				{
+					dni: "1234A", nombre: "Pepe",
+					apellidos: "García Pérez"
+				})
+			var res = await laLogica.buscarPersonaConDNI("1234A")
+			assert.equal(res.length, 1, "¿no hay un resulado?")  // -->  (a, b, c) -> if (a!=b) --> return c 
+			assert.equal(res[0].dni, "1234A", "¿no es 1234A?")
+			assert.equal(res[0].nombre, "Pepe", "¿no es Pepe?")  // el assert es un if 
 
-	// 
-	// 4.
-	//
-	it( "cierro conexion con base de datos", async function() {
+		} catch (error) {
+			error= err; 
+		}
+				
+	
+	// it
+	// ....................................................
+	// ....................................................
 
-			await laLogica.cerrarConexion()
+	it("no puedo insertar una persona con dni que ya está",
+		async function () {
+			var error = null
+			try {
+				await laLogica.insertarPersona(
+					{
+						dni: "1234A", nombre: "Pepa",
+						apellidos: "Pérez Pérez"
+					})
+			} catch (err) {
+				error = err
+			}
+			assert(error, "¿Ha insertado el dni que ya estaba 1234A? (¿No ha pasado por el catch()?")
+		}) // it
+	// ....................................................
+	// ....................................................
+	it("cerrar conexión a la base de datos",
+		async function () {
+			try {
+				await laLogica.cerrar()
+			} catch (err) {
+				// assert.equal( 0, 1, "cerrar conexión a BD fallada: " + err)
+				throw new Error("cerrar conexión a BD fallada: " + err)
+			}
+		}) // it
+	
+	
+})
 
-	}) // it
+})
 
-}) // describe
-
-// --------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------
+*/

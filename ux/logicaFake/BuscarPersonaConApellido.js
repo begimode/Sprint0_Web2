@@ -1,9 +1,9 @@
 // ---------------------------------------------------
 // fake
 // ---------------------------------------------------
-function buscarPersonaConDNI( datos, cb ) {
+function  buscarPersonaConApellido( datos, cb ) {
 
-	var nombreFuncion = "http://localhost:8080/buscarDni/" + datos;
+	var nombreFuncion = "http://localhost:8080/ConsultarPorApellido/" + datos;
 
 
 	// preparar la llamada remota
@@ -24,6 +24,7 @@ function buscarPersonaConDNI( datos, cb ) {
 			// Intento pasarlo a JSON, si puedo: es eso lo que devuelve
 			// Si no: se queda como estaba
 			//
+
 			try {
 
 				resultado = JSON.parse( resultado )
@@ -32,7 +33,6 @@ function buscarPersonaConDNI( datos, cb ) {
 				
 			} catch( error )  {
 			}
-
 			// en todo caso, aqui el primer parámetro (error = null, porque
 			// estoy dentro de status == 200)
 			// Los errores en el uso de la función de la lógica

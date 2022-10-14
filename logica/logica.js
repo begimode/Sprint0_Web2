@@ -1,52 +1,73 @@
-// --------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------
 
-const sqlite3 = require( "sqlite3" )
 
-const cargador = require( "./cargador.js" )
+// IMPORTANTE 
 
-// --------------------------------------------------------------------------------
-//
-// nombreBD: Texto -> logica() -> Logica
-//
-// Donde:
-//
-// Logica = { 
-//   f: ( Texto TArg -> () -> TRes ), // para llamar a una función de la lógica por
-//                                     // su nombre en texto
-//   funciones: [ { conexion: TDep, f: TArg -> () -> TRes } ]_Texto // array asociativo
-//                                                             // con las funciones de logica
-// }
-//
-// (ver cargador.js)
-//
-// --------------------------------------------------------------------------------
-module.exports = function ( nombreBD ) {
-	return new Promise( function( resolver, rechazar ) {
 
-		var conexion = new sqlite3.Database( nombreBD , function( err ) {
-			if ( err ) {
-				rechazar( "Error en conexión a base de datos: " + err )
-			}
+// .....................................................................
+// Logica.js
+// .....................................................................
+const sqlite3 = require("sqlite3")
+// .....................................................................
+// .....................................................................
+module.exports = class Logica {
+	// .................................................................
+	// nombreBD: Texto
+	// -->
+	// constructor () -->
+	// .................................................................
+	constructor(nombreBD, cb) {
+		this.laConexion = new sqlite3.Database(
+			nombreBD,
+			(err) => {
+				if (!err) {
+					this.laConexion.run("PRAGMA foreign_keys = ON")
+				}
+				cb(err)
+			})
+	} // ()
+	// .................................................................
+	// nombreTabla:Texto
+	// -->
+	// borrarFilasDe() -->
+	// .................................................................
+	borrarFilasDe(tabla) {
+		return new Promise((resolver, rechazar) => {
+			this.laConexion.run(
+				"delete from " + tabla + ";",
+				(err) => (err ? rechazar(err) : resolver())
+			)
+		})
+	} // ()
 
-			// console.log(" logica(): conexión abierta con: " + nombreBD )
+	// .................................................................
+	// datos:{dni:Texto, nombre:Texto: apellidos:Texto}
+	// -->
+	// insertarPersona() -->
+	// .................................................................
+	insertarMedicion(datos) {
+		var textoSQL =
+			"insert into Medicion values( $valor, $fecha, $lugar );"
+		var valoresParaSQL = {
+			$valor: datos.valor, $fecha: datos.fecha,
+			$lugar: datos.lugar
+		}
+		// <//> <//> <//> <>/
+		return new Promise((resolver, rechazar) => {
+			this.laConexion.run(textoSQL, valoresParaSQL, function (err) {
+				(err ? rechazar(err) : resolver())
+			})
+		})
+	} // ()
 
-			// conexión establecida con la BD
-			// activo foreing_keys para sqlite3
-			conexion.run( "PRAGMA foreign_keys = ON" )
 
-			var logica = cargador( __dirname + "/funciones", conexion )
-
-			// console.log(" logica(): funciones cargadas " )
-			
-			resolver( logica )
-
-		}) // sqlite3.Database
-	}) // new Promise
-} // module.exports
-
-// --------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------
+	cerrar() {
+		return new Promise((resolver, rechazar) => {
+			this.laConexion.close((err) => {
+				(err ? rechazar(err) : resolver())
+			})
+		})
+	} // ()
+} 
+// class
+// .....................................................................
+// .....................................................................

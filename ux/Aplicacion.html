@@ -1,83 +1,41 @@
-<!-- ---------------------------------------------------- -->
-<!-- ---------------------------------------------------- -->
 <!DOCTYPE html>
 <html>
-
-<!-- ---------------------------------------------------- -->
-<!-- ---------------------------------------------------- -->
 <head>
 <meta charset="utf-8"/>         
+<script src="logicaFake/insertarMedicion.js"></script>
 
-<!-- ---------------------------------------------------- -->
-<script src="logicaFake/llamar.js"></script>
-<script src="logicaFake/prueba.js"></script>
-<script src="logicaFake/insertarPersona.js"></script>
-<script src="logicaFake/buscarPersonaConDNI.js"></script>
+  <script>
+    console.log('correcto')
+    function traerDatos(){
+      const xhttp = new XMLHttpRequest();
+      xhttp.open('GET', './datos.json', true);
+      xhttp.send();
+      xhttp.onreadystatechange = function(){
+        if(this.readyState ==4 && this.status == 200){
+          // console.log(this.responseText)
+          let datos = JSON.parse(this.responseText);
+          console.log(datos);
 
-<!-- ---------------------------------------------------- -->
-<script>
-function llamarAPruebaPulsado() {
+          let res = document.querySelector("#res")
+          res.innerHTML = '';
 
-// llamo a la función de la lógica (versión fake)
-prueba( function( err, res ) {
-  if ( err ) {
-   alert( "hubo un problema llamando a prueba" )
-   return
-  }
+          for(let item of datos){
+            // console.log(item);
+            res.innerHTML += ` 
+            <tr> 
+              <td>${item.Id}</td>
+              <td>${item.Valor}</td>
+              <td>${item.Hora}</td>
+              <td>${item.Lugar}</td>
+            </tr>`
+          }
+        }
+      }
+    }
 
-  alert( "prueba() ha respondido: " + res )
-
-  document.getElementById("salida").innerHTML = res
-})
-
-}
-</script>
-
-<!-- ---------------------------------------------------- -->
-<script>
-function insertarPersonaPulsado() {
-
-var dni = document.getElementById("dni").value
-var nombre = document.getElementById("nombre").value
-var apellidos = document.getElementById("apellidos").value
-
-// llamo a la función de la lógica (versión fake)
-insertarPersona( {dni:  dni, nombre:  nombre, apellidos:  apellidos }, function( err, res ) {
-  // cuando tenga el resultado lo muestro
- if ( err ) {
-   alert( " hubo un error de transmisión http: " + err )
-   return
- } else if ( res.error ) {
-   alert( " hubo un error en la llamada: " + JSON.stringify( res.error ) )
-   return
- }
-  document.getElementById("salida").innerHTML = " resultado= " + res;
-})
-
-}
-</script>
-
-<!-- ---------------------------------------------------- -->
-<script>
-function buscarPersonaPulsado() {
-
-var dni = document.getElementById("dni").value
-
-// llamo a la función de la lógica (versión fake)
-buscarPersonaConDNI( {dni:  dni}, function( err, res ) {
-  // cuando tenga el resultado lo muestro
- if ( err ) {
-   alert( " hubo un error de transmisión http: " + err )
-   return
- } else if ( res.error ) {
-   alert( " hubo un error en la llamada: " + JSON.stringify( res.error ) )
-   return
- }
-  document.getElementById("salida").innerHTML  =  "   resultado=  "  + JSON.stringify( res );
-})
-
-}
-</script>
+    traerDatos()
+    
+  </script>
 
 </head>
 
@@ -85,33 +43,22 @@ buscarPersonaConDNI( {dni:  dni}, function( err, res ) {
 <!-- ---------------------------------------------------- -->
 <body>
 
-<h1>Aplicación web</h1>
+<div class="section">
 
-<form>
-  dni:<br>
-  <input id="dni" type="text" name="dni" value="xxxx">
-  <br>
-  nombre:<br>
-  <input id="nombre" type="text" name="nombre" value="aaaa">
-  <br>
-  apellidos:<br>
-  <input id="apellidos" type="text" name="apellidos" value="bbbb">
-  <br>
-</form> 
+  <table>
 
-<p>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Valor</th>
+        <th>Fecha</th>
+        <th>Lugar</th>
+      </tr>
+    </thead>
+    <tbody id="res"></tbody>
+  </table>
+</div>
 
-<button type="buton" onclick="insertarPersonaPulsado()">Insertar Persona</button>
-
-<p>
-
-<button type="buton" onclick="buscarPersonaPulsado()">Buscar Persona</button>
-
-<p>
-
-<button type="button" onclick="llamarAPruebaPulsado()">Llamar prueba()</button>
-
-<p id="salida">Antes</p>
 
 </body>
 </html>
